@@ -10,7 +10,7 @@ __license__ = "..."
 
 import argparse
 from logzero import logger
-from .app.app import Boilerplate
+from .app.app import Template
 
 
 def parse_args():
@@ -38,7 +38,7 @@ if __name__ == '__main__':
     if args.verbose:
         logger.info("Argument -v|-vv|-vvv: %s", args.verbose)
 
-    boilerplate = Boilerplate()
-    boilerplate.inc()
-    logger.debug("The value now is '%s'", boilerplate.value)
+    template = Template()
+    template.inc()
+    logger.debug("The value now is '%s'", template.value)
 

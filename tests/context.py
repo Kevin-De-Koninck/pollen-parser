@@ -1,2 +1,2 @@
-from boilerplate import Boilerplate  # noqa # pylint: disable=unused-import, wrong-import-position
+from template import Template  # noqa # pylint: disable=unused-import, wrong-import-position
 

@@ -6,7 +6,7 @@ Some handy texts
 from logzero import logger
 
 
-class Boilerplate:
+class Template:
     def __init__(self):
         logger.debug("Initializing the value to 1")
         self.value = 1

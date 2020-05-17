@@ -4,11 +4,11 @@ set -eu
 source ./common_functions.sh
 
 # Original names
-OLD_MODULE_NAME_LOWER_CASE='boilerplate'
-OLD_MODULE_NAME_CAPITALIZED='Boilerplate'
-OLD_REPO_NAME="python-project-boilerplate"
+OLD_MODULE_NAME_LOWER_CASE='template'
+OLD_MODULE_NAME_CAPITALIZED='Template'
+OLD_REPO_NAME="python-project-template"
 OLD_REPO_OWNER="kevin-de-koninck"
-OLD_GITHUB_TOKEN_FILE="~/GH_TOKEN.txt"
+OLD_GITHUB_TOKEN_FILE="/Users/kevin/GH_TOKEN.txt"
 
 # New Names
 MODULE_NAME="$(get_value_from_section_in_config_file "META" "MODULE_NAME")"

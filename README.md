@@ -1,10 +1,10 @@
-![Push Docker container](https://github.com/Kevin-De-Koninck/python-project-boilerplate/workflows/Push%20Docker%20container/badge.svg)
-![Build and tests](https://github.com/Kevin-De-Koninck/python-project-boilerplate/workflows/Build%20and%20tests/badge.svg)
-[![Maintainability](https://api.codeclimate.com/v1/badges/d3d73acf01c5748c0b7c/maintainability)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-boilerplate/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/d3d73acf01c5748c0b7c/test_coverage)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-boilerplate/test_coverage)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-boilerplate&metric=alert_status)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-boilerplate)
+![Push Docker container](https://github.com/Kevin-De-Koninck/python-project-template/workflows/Push%20Docker%20container/badge.svg)
+![Build and tests](https://github.com/Kevin-De-Koninck/python-project-template/workflows/Build%20and%20tests/badge.svg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d3d73acf01c5748c0b7c/maintainability)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-template/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/d3d73acf01c5748c0b7c/test_coverage)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-template/test_coverage)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-template&metric=alert_status)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-template)
 
-# python-project-boilerplate
+# python-project-template
 
 This repository can be used as a template for starting every Python project you'll ever make. The code will run inside a Docker container along with all tests. This makes sure that the requirements for the host development machine are minimal:
 
@@ -68,7 +68,7 @@ https://github.com/OWNER/REPOSITORY/packages
 ```
 In this case, it would be:
 ```
-https://github.com/kevin-de-koninck/python-project-boilerplate/packages
+https://github.com/kevin-de-koninck/python-project-template/packages
 ```
 
 ### Create a repository secret for the GitHub token
@@ -159,7 +159,7 @@ git push
 git push origin --tags
 ```
 
-If everything was successfull, you'll now have succeeding tests on [Github Actions](https://github.com/Kevin-De-Koninck/python-project-boilerplate/actions) and a Docker container image available on the [Docker registry](https://github.com/Kevin-De-Koninck/python-project-boilerplate/packages).
+If everything was successfull, you'll now have succeeding tests on [Github Actions](https://github.com/Kevin-De-Koninck/python-project-template/actions) and a Docker container image available on the [Docker registry](https://github.com/Kevin-De-Koninck/python-project-template/packages).
 
 ## Badges on the README.md file
 
@@ -253,7 +253,7 @@ Tests are run with pytest and can be modified/added under the directory 'tests'.
 The `config.ini` file can be used to set custom environment variables, mount points and port exposure inside the container. The following snippit of `config.ini` will:
 
 - expose port 8000 inside the container and when we run the container with `run.sh` hostport 12345 will be mapped to port 8000 inside the container.
-- Create a mount point '/app/boilerplate/extras' and when we run the container with `run.sh` host volume /Users/kevin/extras will be mounted inside the container.
+- Create a mount point '/app/template/extras' and when we run the container with `run.sh` host volume /Users/kevin/extras will be mounted inside the container.
 - Envirment variable 'TEST_ENV' will be set containing the value 'test' inside the container.
 
 ``` ini
@@ -261,7 +261,7 @@ The `config.ini` file can be used to set custom environment variables, mount poi
 TEST_ENV=test
 
 [VOLUME_MAPS]
-/Users/kevin/extras=/app/boilerplate/extras
+/Users/kevin/extras=/app/template/extras
 
 [PORT_MAPS]
 12345=8000
@@ -282,7 +282,7 @@ If it is required to pull new updates made to the template repository, use the f
 
 ``` bash
 # Add the remote, call it template
-git remote add template https://github.com/Kevin-De-Koninck/python-project-boilerplate.git
+git remote add template https://github.com/Kevin-De-Koninck/python-project-template.git
 
 # Get everyting from the remote
 git fetch template

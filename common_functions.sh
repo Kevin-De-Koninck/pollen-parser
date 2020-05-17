@@ -4,8 +4,8 @@
 ####################################################################################
 
 # Project info
-MODULE="boilerplate"
-REGISTRY="docker.pkg.github.com/kevin-de-koninck/python-project-boilerplate"
+MODULE="template"
+REGISTRY="docker.pkg.github.com/kevin-de-koninck/python-project-template"
 
 # Image and tag
 IMAGE="${REGISTRY}/${MODULE}"
