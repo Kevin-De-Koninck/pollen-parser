@@ -1,9 +1,3 @@
-![Push Docker container](https://github.com/Kevin-De-Koninck/python-project-template/workflows/Push%20Docker%20container/badge.svg)
-![Build and tests](https://github.com/Kevin-De-Koninck/python-project-template/workflows/Build%20and%20tests/badge.svg)
-[![Maintainability](https://api.codeclimate.com/v1/badges/d3d73acf01c5748c0b7c/maintainability)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-template/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/d3d73acf01c5748c0b7c/test_coverage)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-template/test_coverage)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-template&metric=alert_status)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-template)
-
 # python-project-template
 
 This repository can be used as a template for starting every Python project you'll ever make. The code will run inside a Docker container along with all tests. This makes sure that the requirements for the host development machine are minimal:
