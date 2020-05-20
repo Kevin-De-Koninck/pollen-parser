@@ -127,6 +127,7 @@ fi
 # Check if the container exists
 check_if_container_exists
 
+# Run the container (dev or prod, depending on the version tag)
 run_container
 
 exit 0

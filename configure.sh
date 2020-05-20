@@ -10,7 +10,7 @@ OLD_REPO_NAME="python-project-template"
 OLD_REPO_OWNER="kevin-de-koninck"
 OLD_GITHUB_TOKEN_FILE="/Users/kevin/GH_TOKEN.txt"
 
-# New Names
+# New names
 MODULE_NAME="$(get_value_from_section_in_config_file "META" "MODULE_NAME")"
 REPO_NAME="$(basename $(git rev-parse --show-toplevel))"
 REPO_OWNER="$(get_value_from_section_in_config_file "META" "REPO_OWNER")"
@@ -38,12 +38,12 @@ fi
 
 print_info "Adding all changes to a new commit..."
 git add -u 
-git commit -m "initialize project"
+git commit -m "Initialize project"
 
 print_info "Setting a new tag in the repository..."
 git tag -a v0.0.0 -m "First draft for Github action 'push'"
 
-print_info "All changes are inside the local commit 'Initialize project'. Use 'git push' to push these changes. This will trigger the a github action."
+print_info "All changes are inside the local commit 'Initialize project'. Use 'git push' to push these changes. This will trigger the github action."
 print_info "Tag v0.0.0 has been set. Use 'git push origin --tags' to push the tag. This will trigger a github action that builds and pushes the production container image to the remote Docker registry."
 print_info "You can now safely remove this script. Have fun!"
 exit 0
