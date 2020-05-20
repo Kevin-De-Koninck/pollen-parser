@@ -1,8 +1,8 @@
-![Build and tests](https://github.com/Kevin-De-Koninck/python-project-pollenparser/workflows/Build%20and%20tests/badge.svg)
-![Push Docker container](https://github.com/Kevin-De-Koninck/python-project-pollenparser/workflows/Push%20Docker%20container/badge.svg)
-[![Maintainability](https://api.codeclimate.com/v1/badges/33686856d8577095210f/maintainability)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-pollenparser/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/33686856d8577095210f/test_coverage)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-pollenparser/test_coverage)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-pollenparser&metric=alert_status)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-pollenparser)
+![Build and tests](https://github.com/Kevin-De-Koninck/pollen-parser/workflows/Build%20and%20tests/badge.svg)
+![Push Docker container](https://github.com/Kevin-De-Koninck/pollen-parser/workflows/Push%20Docker%20container/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_pollen-parser&metric=alert_status)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_pollen-parser)
+[![Maintainability](https://api.codeclimate.com/v1/badges/70d90421995e8a8dcf64/maintainability)](https://codeclimate.com/github/Kevin-De-Koninck/pollen-parser/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/70d90421995e8a8dcf64/test_coverage)](https://codeclimate.com/github/Kevin-De-Koninck/pollen-parser/test_coverage)
 
 # python-project-pollenparser
 
