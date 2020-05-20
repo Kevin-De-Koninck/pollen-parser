@@ -17,7 +17,11 @@ DOCKER_RUN_BASE="docker run --rm -it"
 
 help () {
   cat << EOF
+<<<<<<< HEAD
 ./run.sh [-v VERSION] [-d] [--dryrun] [-b] [-c COMMAND] [-l]
+=======
+./run.sh [-v VERSION] [-d] [--dryrun] [-b] [-c COMMAND] [-l] [-h]
+>>>>>>> Initial commit
 
 Arguments:
     -v|--version VERSION          Overwrite the version of the to run container
@@ -25,7 +29,11 @@ Arguments:
     --dryrun                      Do not actually perform the actions, just print the commands out
     -b|---bash                    Run an interactive shell inside the container
     -c|--command COMMAND          The command to be executed (will be ignore if -b is set)
+<<<<<<< HEAD
     -l|--login                    Log in into the Remote Docker registry only and exit
+=======
+    -l|--login                    Log in into the Remote Docker registry
+>>>>>>> Initial commit
     -h|--help                     Show this message
 
 EOF
@@ -35,6 +43,7 @@ EOF
 # FUNCTIONS
 ####################################################################################
 
+<<<<<<< HEAD
 # Create a command line interface argument for a certain section.
 # This will convert the data in the config.ini file into the correct port and volume mapping string
 # used on the command line interface.
@@ -43,6 +52,10 @@ EOF
 #   - ARGS_PREFIX: CLI argument prefix in front of the maps (-v, -p)
 create_cli_arg () {
   local SECTION="${1}"
+=======
+create_cli_arg () {
+  local WHAT="${1}"
+>>>>>>> Initial commit
   local ARGS_PREFIX="${2}"
 
   local ARGS=""
@@ -50,27 +63,41 @@ create_cli_arg () {
     if [[ "${LINE}" != "" ]]; then
       ARGS="${ARGS} ${ARGS_PREFIX} '${LINE}'"
     fi  
+<<<<<<< HEAD
   done < <(parse_section_of_config_ini "${SECTION}")
+=======
+  done < <(parse_section_of_config_ini "${WHAT}")
+>>>>>>> Initial commit
 
   echo "$(echo ${ARGS} | tr '=' ':')"
 }
 
+<<<<<<< HEAD
 # Determine if the required docker container exists locally.
 # If it does not exist locally, try to pull it from the remote.
 # Else, fail the script.
+=======
+>>>>>>> Initial commit
 check_if_container_exists () {
   if [[ "$(docker images -q ${IMAGE}:${TAG} 2> /dev/null)" == "" ]]; then
     print_info "Image '${IMAGE}:${TAG}' does not exist locally, trying to pull it from the remote repo..."
     if ! docker pull ${IMAGE}:${TAG} 2> /dev/null; then
       print_error "Image ${IMAGE}:${TAG} does not exist locally and could not be pulled from the remote repository. Please build this image first." 
     else
+<<<<<<< HEAD
       print_info "Unable to download the image '${IMAGE}:${TAG}' from the remote repository. Please build this image first by running:" 
       print_info "    ./build.sh -p <dev/prod> -v ${TAG}"
+=======
+      print_info "Unable to download the image '${IMAGE}:${TAG}' from the remote repository. Please build this image first." 
+>>>>>>> Initial commit
     fi
   fi
 }
 
+<<<<<<< HEAD
 # Run the Docker container.
+=======
+>>>>>>> Initial commit
 run_container () {
   print_info "Running the container as follows:"
   print_info "  ${DOCKER_RUN_BASE} ${IMAGE}:${TAG} ${COMMAND}"
@@ -117,7 +144,11 @@ while [[ $# -gt 0 ]]; do
       ;;
     -l|--login)
       docker_login
+<<<<<<< HEAD
       exit 0
+=======
+      shift
+>>>>>>> Initial commit
       ;;
     -h|--help)
       help

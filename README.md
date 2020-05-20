@@ -1,5 +1,6 @@
 ![Build and tests](https://github.com/Kevin-De-Koninck/python-project-template/workflows/Build%20and%20tests/badge.svg)
 ![Push Docker container](https://github.com/Kevin-De-Koninck/python-project-template/workflows/Push%20Docker%20container/badge.svg)
+<<<<<<< HEAD
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/33686856d8577095210f/maintainability)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-template/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/33686856d8577095210f/test_coverage)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-template/test_coverage)
@@ -9,6 +10,11 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-template&metric=coverage)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-template)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-template&metric=security_rating)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-template)
 
+=======
+[![Maintainability](https://api.codeclimate.com/v1/badges/33686856d8577095210f/maintainability)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-template/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/33686856d8577095210f/test_coverage)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-template/test_coverage)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-template&metric=alert_status)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-template)
+>>>>>>> Initial commit
 
 # python-project-template
 
@@ -17,7 +23,11 @@ This repository can be used as a template for starting every Python project you'
 - Docker
 - Bash
 
+<<<<<<< HEAD
 This project makes use of SonarCloud (and optionally CodeClimate) for the test coverage visualisation and the code quality checks.
+=======
+This project makes use of CodeClimate and SonarCloud for the test coverage and the code quality checks.
+>>>>>>> Initial commit
 
 The following sections explain how a new user can set up it's project, after forking this template on github.
 
@@ -28,7 +38,11 @@ The following sections explain how a new user can set up it's project, after for
     + [Create a repository secret for the GitHub token](#create-a-repository-secret-for-the-github-token)
   * [Setup SonarCloud](#setup-sonarcloud)
     + [Create a repository secret for the SonarCloud login](#create-a-repository-secret-for-the-sonarcloud-login)
+<<<<<<< HEAD
   * [(optional) Setup CodeClimate](#optional-setup-codeclimate)
+=======
+  * [Setup CodeClimate](#setup-codeclimate)
+>>>>>>> Initial commit
     + [Create a repository secret for the CodeClimate test Reporter ID](#create-a-repository-secret-for-the-codeclimate-test-reporter-id)
   * [Configure the project](#configure-the-project)
   * [Badges on the README.md file](#badges-on-the-readmemd-file)
@@ -114,6 +128,7 @@ We don't want to save the login token as plain text in our repository. For this,
     - Value: __<Paste the Dsonar.login token here>__
 5. Click on 'Add secret'.
 
+<<<<<<< HEAD
 ## (optional) Setup CodeClimate
 
 This is optional, since SonarCloud does the same things and more. To remove CodeClimate from the project, remove the following code from the `.github/workflows/build-test.yml` [file](https://github.com/Kevin-De-Koninck/python-project-template/blob/master/.github/workflows/build-test.yml#L66-L72):
@@ -129,6 +144,12 @@ This is optional, since SonarCloud does the same things and more. To remove Code
 ```
 
 If you do want to keep using CodeClimate, Make sure you have an account on CodeClimate. If not, log in with your GitHub account on 'CodeClimate Quality': https://codeclimate.com/login/github/join 
+=======
+## Setup CodeClimate
+
+Make sure you have an account on CodeClimate. If not, log in with your GitHub account on 'CodeClimate Quality': https://codeclimate.com/login/github/join 
+
+>>>>>>> Initial commit
 
 1. Open your dashboard: https://codeclimate.com/oss/dashboard
 2. Click on 'Add repository'.
