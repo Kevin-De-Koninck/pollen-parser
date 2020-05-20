@@ -3,8 +3,8 @@
 ####################################################################################
 
 # Project info
-MODULE="template"
-REGISTRY="docker.pkg.github.com/kevin-de-koninck/python-project-template"
+MODULE="pollenparser"
+REGISTRY="docker.pkg.github.com/kevin-de-koninck/python-project-pollenparser"
 
 # Image and tag
 IMAGE="${REGISTRY}/${MODULE}"

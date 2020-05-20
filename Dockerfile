@@ -44,13 +44,13 @@ RUN /venv/bin/bandit -r --ini setup.cfg
 #FROM base AS runner  # build-dev
 FROM {RUNNER} AS runner
 COPY --from=builder-venv /venv /venv
-COPY --from=tester /app/template /app/template
+COPY --from=tester /app/pollenparser /app/pollenparser
 COPY --from=tester /app/coverage.xml /app/coverage.xml
 #ENVIRONMENT_VARS
 #MOUNT_POINTS
 #EXPOSED_PORTS
 WORKDIR /app
-ENTRYPOINT ["/venv/bin/python3", "-m", "template"]
+ENTRYPOINT ["/venv/bin/python3", "-m", "pollenparser"]
 USER {USER}
 LABEL name={NAME}
 LABEL version={VERSION}
