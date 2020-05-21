@@ -61,7 +61,7 @@ jobs:
         pip install -r requirements_tests.txt
 
     - name: Generate a coverage.py file on the local machine by running pytest again
-      run: pytest
+      run: pytest && cat coverage.xml && echo '' && ls && pwd
 
     - name: SonarCloud scanner
       uses: sonarsource/sonarcloud-github-action@master
