@@ -1,3 +1,5 @@
 logzero  # see github.com/metachris/logzero
+pyyaml
 bs4  # https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+requests
 
