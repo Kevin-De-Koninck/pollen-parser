@@ -70,7 +70,6 @@ build (){
 
   local ENV_CMD="$(create_dockerfile_command "ENVIRONMENT_VARS" "ENV")"
   local EXPOSE_CMD="$(create_dockerfile_command "PORT_MAPS" "EXPOSE")"
-  local VOLUME_CMD="$(create_dockerfile_command "VOLUME_MAPS" "RUN mkdir -p")"
 
   print_info "Building ${PROJECT} image with labels:"
   print_info "    Name:     ${MODULE}"
@@ -84,7 +83,6 @@ build (){
         -e "s|{RUNNER}|${RUNNER}|g" \
         -e "s|{USER}|${USER_ID}|g" \
         -e "s|#ENVIRONMENT_VARS|${ENV_CMD}|g" \
-        -e "s|#MOUNT_POINTS|${VOLUME_CMD}|g" \
         -e "s|#EXPOSED_PORTS|${EXPOSE_CMD}|g" \
         -e '/#START_TESTS_MARKER/,/#END_TESTS_MARKER/d' \
         Dockerfile | docker build -t ${IMAGE}:${VERSION} -f- .
@@ -95,7 +93,6 @@ build (){
         -e "s|{RUNNER}|${RUNNER}|g" \
         -e "s|{USER}|${USER_ID}|g" \
         -e "s|#ENVIRONMENT_VARS|${ENV_CMD}|g" \
-        -e "s|#MOUNT_POINTS|${VOLUME_CMD}|g" \
         -e "s|#EXPOSED_PORTS|${EXPOSE_CMD}|g" \
         Dockerfile | docker build -t ${IMAGE}:${VERSION} -f- .
   fi

@@ -46,7 +46,6 @@ COPY --from=builder-venv /venv /venv
 COPY --from=tester /app/template /app/template
 COPY --from=tester /app/coverage.xml /app/coverage.xml
 #ENVIRONMENT_VARS
-#MOUNT_POINTS
 #EXPOSED_PORTS
 WORKDIR /app
 ENTRYPOINT ["/venv/bin/python3", "-m", "template"]
