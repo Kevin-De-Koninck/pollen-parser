@@ -72,7 +72,7 @@ jobs:
         ./cc-test-reporter upload-coverage -r "${{ secrets.CC_TEST_REPORTER_ID }}"
         
     - name: Rename the source in the converage file since sonarcloud runs inside a Docker container
-      run: sed -i "s|$(pwd)|/github/workspace|g"
+      run: sed -i "s|$(pwd)|/github/workspace|g" coverage.xml
 
     - name: SonarCloud scanner
       uses: sonarsource/sonarcloud-github-action@master
