@@ -15,7 +15,7 @@ source ./common_functions.sh
 # Original names
 OLD_MODULE_NAME_LOWER_CASE='pollenparser'
 OLD_MODULE_NAME_CAPITALIZED='Pollenparser'
-OLD_REPO_NAME="python-project-pollenparser"
+OLD_REPO_NAME="pollen-parser"
 OLD_REPO_OWNER="kevin-de-koninck"
 OLD_GITHUB_TOKEN_FILE="/Users/kevin/GH_TOKEN.txt"
 

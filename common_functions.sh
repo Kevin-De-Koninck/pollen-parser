@@ -4,7 +4,7 @@
 
 # Project info
 MODULE="pollenparser"
-REGISTRY="docker.pkg.github.com/kevin-de-koninck/python-project-pollenparser"
+REGISTRY="docker.pkg.github.com/kevin-de-koninck/pollen-parser"
 
 # Image and tag
 IMAGE="${REGISTRY}/${MODULE}"
