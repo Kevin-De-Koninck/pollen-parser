@@ -12,16 +12,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends --yes python3-v
     python3 -m venv /venv && \
     /venv/bin/pip install --upgrade pip
 
-# Populate the virtual environment in builder-venv-tests with all tools and tools for testing
-FROM builder AS builder-venv-tests
-COPY requirements_tests.txt /requirements_tests.txt
-COPY requirements.txt /requirements.txt
-RUN /venv/bin/pip install -r /requirements_tests.txt -r /requirements.txt
-
 # Populate the virtual environment in builder-venv with only tools required for the application
 FROM builder AS builder-venv
 COPY requirements.txt /requirements.txt
 RUN /venv/bin/pip install -r /requirements.txt
+
+# Populate the virtual environment in builder-venv-tests with all tools and tools for testing
+FROM builder-venv AS builder-venv-tests
+COPY requirements_tests.txt /requirements_tests.txt
+RUN /venv/bin/pip install -r /requirements_tests.txt
 
 # Copy the entire repository and run all pytests in the tester image
 FROM builder-venv-tests AS tester
