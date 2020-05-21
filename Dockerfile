@@ -31,7 +31,7 @@ RUN touch /app/coverage.xml
 RUN echo "\033[0;34m\n*** RUNNING PYTEST NOW...\033[0m\n"
 RUN /venv/bin/pytest
 RUN echo "\033[0;34m\n*** RUNNING PYLINT NOW...\033[0m\n"
-RUN /venv/bin/pylint --rcfile=setup.cfg **/*.py
+RUN /venv/bin/pylint --rcfile=setup.cfg /app/template/
 RUN echo "\033[0;34m\n*** RUNNING FLAKE8 NOW...\033[0m\n"
 RUN /venv/bin/flake8
 RUN echo "\033[0;34m\n*** RUNNING BANDIT NOW...\033[0m\n"
