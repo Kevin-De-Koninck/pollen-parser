@@ -1,65 +1,60 @@
-"""
-Documentation
-
-Some handy texts
-"""
-
-<<<<<<< HEAD
-=======
-__author__ = "Kevin De Koninck"
-__version__ = "0.0.1"
-__license__ = "..."
-
->>>>>>> Initial commit
 import argparse
+import yaml
 from logzero import logger
 from .app.app import Pollenparser
 
 
 def parse_args():
-<<<<<<< HEAD
     parser = argparse.ArgumentParser()
-
-    parser.add_argument("-p", "--port",
-                        action="store", type=int,
-                        help="Required positional argument")
-    parser.add_argument("-f", "--flag",
-                        action="store_true", default=False,
-                        help="Optional argument flag which defaults to False")
-    parser.add_argument("-n", "--name",
-                        action="store",
-                        help="Optional argument which requires a parameter (ei.g.: -n test)")
-    parser.add_argument("-v", "--verbose",
-                        action="count", default=0,
-                        help="Optional verbosity counter (-v, -vv, etc)")
-
-=======
-    """ This is executed when run from the command line """
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-p", "--port", action="store", type=int,
-                        help="Required positional argument")
-    parser.add_argument("-f", "--flag", action="store_true", default=False,
-                        help="Optional argument flag which defaults to False")
-    parser.add_argument("-n", "--name", action="store",
-                        help="Optional argument which requires a parameter (ei.g.: -n test)")
-    parser.add_argument("-v", "--verbose", action="count", default=0,
-                        help="Optional verbosity counter (-v, -vv, etc)")
-    parser.add_argument("--version", action="version",
-                        version="%(prog)s (version {version})".format(version=__version__),
-                        help="Specify output of '--version'")
->>>>>>> Initial commit
+    parser.add_argument("-d", "--disable-push-notifications", action="store_true", default=False,
+                        help="if true, no push notifications will be send to pushover")
+    parser.add_argument("-f", "--config-file", action="store", default="POLLEN_PARSER_KEYS.yml",
+                        help="YAML file containing the pushover keys")
     return parser.parse_args()
+
+
+def validate_file(conf_file):
+    if not os.path.exists(conf_file):
+        logger.error("File '%s' does not exist...", conf_file)
+        sys.exit(1)
+
+    if not os.path.isfile(conf_file):
+        logger.error("Path '%s' is not a file...", conf_file)
+        sys.exit(1)
+
+
+def parse_pushover_config_file(conf_file):
+    results = {}
+    with open(conf_file, 'r') as stream:
+        try:
+            results = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            logger.error("Error while parsing YAML file '%s':\n%s", conf_file, exc)
+            sys.exit(1)
+
+    if not results.get("pushover"):
+        logger.error("File '%s' should contain a dictionary named 'pushover'...", conf_file)
+        sys.exit(1)
+    for key in ["API_token", "user_key"]:
+        if not results.get("pushover").get(key):
+            logger.error("File '%s' should contain a dictionary named 'pushover' with a key named '%s'...",
+                         conf_file, key)
+            sys.exit(1)
+
+    return results
 
 
 if __name__ == '__main__':
     args = parse_args()
-    logger.info("Argument -p|--port: %s", args.port)
-    logger.info("Argument -f|--flag: %s", args.flag)
-    logger.info("Argument -n|--name: %s", args.name)
-    if args.verbose:
-        logger.info("Argument -v|-vv|-vvv: %s", args.verbose)
 
-    pollenparser = Pollenparser()
-    pollenparser.inc()
-    logger.debug("The value now is '%s'", pollenparser.value)
+    config_file = "/app/pollenparser/resources/{}".format(args.config_file)
+    logger.debug("Using config file: %s", config_file)
+    validate_file(config_file)
+    pushover_config = parse_pushover_config_file(config_file)
+
+    pollenparser = Pollenparser(disable_push_notifications=args.disable_push_notifications,
+                                pushover_user_key=pushover_config.get("pushover").get("user_key"),
+                                pushover_api_token=pushover_config.get("pushover").get("API_token"))
+    pollenparser.parse_page_and_send_push_notification()
+    sys.exit(0)
 

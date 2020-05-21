@@ -12,16 +12,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends --yes python3-v
     python3 -m venv /venv && \
     /venv/bin/pip install --upgrade pip
 
-# Populate the virtual environment in builder-venv-tests with all tools and tools for testing
-FROM builder AS builder-venv-tests
-COPY requirements_tests.txt /requirements_tests.txt
-COPY requirements.txt /requirements.txt
-RUN /venv/bin/pip install -r /requirements_tests.txt -r /requirements.txt
-
 # Populate the virtual environment in builder-venv with only tools required for the application
 FROM builder AS builder-venv
 COPY requirements.txt /requirements.txt
-RUN /venv/bin/pip install -r /requirements.txt
+RUN /venv/bin/pip install -r /requirements.txt && \
+    /venv/bin/pip install ipdb
+
+# Populate the virtual environment in builder-venv-tests with all tools and tools for testing
+FROM builder-venv AS builder-venv-tests
+COPY requirements_tests.txt /requirements_tests.txt
+RUN /venv/bin/pip install -r /requirements_tests.txt
 
 # Copy the entire repository and run all pytests in the tester image
 FROM builder-venv-tests AS tester
@@ -32,7 +32,7 @@ RUN touch /app/coverage.xml
 RUN echo "\033[0;34m\n*** RUNNING PYTEST NOW...\033[0m\n"
 RUN /venv/bin/pytest
 RUN echo "\033[0;34m\n*** RUNNING PYLINT NOW...\033[0m\n"
-RUN /venv/bin/pylint --rcfile=setup.cfg **/*.py
+RUN /venv/bin/pylint --rcfile=setup.cfg /app/pollenparser/
 RUN echo "\033[0;34m\n*** RUNNING FLAKE8 NOW...\033[0m\n"
 RUN /venv/bin/flake8
 RUN echo "\033[0;34m\n*** RUNNING BANDIT NOW...\033[0m\n"
@@ -47,7 +47,6 @@ COPY --from=builder-venv /venv /venv
 COPY --from=tester /app/pollenparser /app/pollenparser
 COPY --from=tester /app/coverage.xml /app/coverage.xml
 #ENVIRONMENT_VARS
-#MOUNT_POINTS
 #EXPOSED_PORTS
 WORKDIR /app
 ENTRYPOINT ["/venv/bin/python3", "-m", "pollenparser"]
