@@ -1,0 +1,47 @@
+# The base image is only used for build-dev (see last step)
+FROM python:3.8.1-buster AS base
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends vim netcat && \
+    rm -rf /var/lib/apt/lists/*
+
+# The builder image contains all required development tools
+FROM python:3.8.1-buster AS builder
+COPY requirements.txt /requirements.txt
+RUN apt-get update && apt-get install -y --no-install-recommends --yes python3-venv gcc libpython3-dev && \
+    python3 -m venv /venv && \
+    /venv/bin/pip install --upgrade pip && \
+    /venv/bin/pip install -r /requirements.txt && \
+    /venv/bin/pip install ipdb  # Extra development tools not available in prod image
+
+# Copy the entire repository and run all pytests in the tester image
+FROM builder AS tester
+COPY . /app
+WORKDIR /app
+COPY requirements_tests.txt /requirements_tests.txt
+RUN /venv/bin/pip install -r /requirements_tests.txt
+RUN touch /app/coverage.xml
+#START_TESTS_MARKER
+RUN echo "\033[0;34m\n*** RUNNING PYTEST NOW...\033[0m\n"
+RUN /venv/bin/pytest
+RUN echo "\033[0;34m\n*** RUNNING PYLINT NOW...\033[0m\n"
+RUN /venv/bin/pylint --rcfile=setup.cfg /app/template/
+RUN echo "\033[0;34m\n*** RUNNING FLAKE8 NOW...\033[0m\n"
+RUN /venv/bin/flake8
+RUN echo "\033[0;34m\n*** RUNNING BANDIT NOW...\033[0m\n"
+RUN /venv/bin/bandit -r --ini setup.cfg
+#END_TESTS_MARKER
+
+# From our base image, copy the artifacts from previous stages (virtual env and app)
+FROM base AS runner
+COPY --from=builder /venv /venv
+COPY --from=tester /app/template /app/template
+COPY --from=tester /app/coverage.xml /app/coverage.xml
+#ENVIRONMENT_VARS
+#EXPOSED_PORTS
+WORKDIR /app
+ENTRYPOINT ["/venv/bin/python3", "-m", "template"]
+# Run as root for development
+USER 0
+LABEL name={NAME}
+LABEL version={VERSION}
+

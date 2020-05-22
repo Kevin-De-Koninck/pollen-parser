@@ -8,12 +8,6 @@ source ./common_functions.sh
 # Version string
 VERSION="0.0.0"
 
-# Container version for build and prod
-BUILDER_DEV="python:3.8.1-buster"
-BUILDER_PROD="debian:buster-slim"
-RUNNER_DEV="base"
-RUNNER_PROD="gcr.io/distroless/python3-debian10"
-
 # Other vars
 SKIP_TESTS=False
 PUSH_TO_REGISTRY=False
@@ -65,8 +59,7 @@ create_dockerfile_command () {
 }
 
 build (){
-  local BUILDER="${1}"
-  local RUNNER="${2}"
+  local BUILD_PROJECT="${1}"
 
   local ENV_CMD="$(create_dockerfile_command "ENVIRONMENT_VARS" "ENV")"
   local EXPOSE_CMD="$(create_dockerfile_command "PORT_MAPS" "EXPOSE")"
@@ -79,22 +72,16 @@ build (){
     print_info "Skipping tests during build..."
     sed -e "s|{NAME}|${MODULE}|g" \
         -e "s|{VERSION}|${VERSION}|g" \
-        -e "s|{BUILDER}|${BUILDER}|g" \
-        -e "s|{RUNNER}|${RUNNER}|g" \
-        -e "s|{USER}|${USER_ID}|g" \
         -e "s|#ENVIRONMENT_VARS|${ENV_CMD}|g" \
         -e "s|#EXPOSED_PORTS|${EXPOSE_CMD}|g" \
         -e '/#START_TESTS_MARKER/,/#END_TESTS_MARKER/d' \
-        Dockerfile | docker build -t ${IMAGE}:${VERSION} -f- .
+        Dockerfile.${BUILD_PROJECT} | docker build -t ${IMAGE}:${VERSION} -f- .
   else
     sed -e "s|{NAME}|${MODULE}|g" \
         -e "s|{VERSION}|${VERSION}|g" \
-        -e "s|{BUILDER}|${BUILDER}|g" \
-        -e "s|{RUNNER}|${RUNNER}|g" \
-        -e "s|{USER}|${USER_ID}|g" \
         -e "s|#ENVIRONMENT_VARS|${ENV_CMD}|g" \
         -e "s|#EXPOSED_PORTS|${EXPOSE_CMD}|g" \
-        Dockerfile | docker build -t ${IMAGE}:${VERSION} -f- .
+        Dockerfile.${BUILD_PROJECT} | docker build -t ${IMAGE}:${VERSION} -f- .
   fi
 
   if [[ "${PUSH_TO_REGISTRY}" == "True" ]]; then
@@ -158,13 +145,11 @@ fi
 # Build the project
 case "${PROJECT}" in
   prod)
-    USER_ID=1001  # Best practice: never run as root
-    build "${BUILDER_PROD}" "${RUNNER_PROD}"
+    build "prod"
     ;;
   dev)
     VERSION="${TAG}"
-    USER_ID=0  # Run as root for development
-    build "${BUILDER_DEV}" "${RUNNER_DEV}"
+    build "dev"
     ;;
   UNDEFINED)
     ;;
