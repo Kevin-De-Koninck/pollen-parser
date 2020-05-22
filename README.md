@@ -22,7 +22,7 @@ The following sections explain how a new user can set up it's project, after for
     + [Create a repository secret for the GitHub token](#create-a-repository-secret-for-the-github-token)
   * [Setup SonarCloud](#setup-sonarcloud)
     + [Create a repository secret for the SonarCloud login](#create-a-repository-secret-for-the-sonarcloud-login)
-  * [Setup CodeClimate](#setup-codeclimate)
+  * [(optional) Setup CodeClimate](#optional-setup-codeclimate)
     + [Create a repository secret for the CodeClimate test Reporter ID](#create-a-repository-secret-for-the-codeclimate-test-reporter-id)
   * [Configure the project](#configure-the-project)
   * [Badges on the README.md file](#badges-on-the-readmemd-file)
