@@ -11,7 +11,7 @@ This repository can be used as a template for starting every Python project you'
 - Docker
 - Bash
 
-This project makes use of CodeClimate and SonarCloud for the test coverage and the code quality checks.
+This project makes use of SonarCloud (and optionally CodeClimate) for the test coverage visualisation and the code quality checks.
 
 The following sections explain how a new user can set up it's project, after forking this template on github.
 
