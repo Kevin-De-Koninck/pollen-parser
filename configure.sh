@@ -31,6 +31,9 @@ git grep -l "${OLD_GITHUB_TOKEN_FILE}" | xargs sed -i '' -e "s|${OLD_GITHUB_TOKE
 
 git mv "${OLD_MODULE_NAME_LOWER_CASE}" "${MODULE_LOWERCASE}"
 
+print_info "Removing the badges from the README.md file"
+sed -i '' -e 1,6d README.md
+
 print_info "Testing if everything works by building the development container and running the integrated test stage..."
 if ! ./build.sh --project dev --clean; then
   print_error "Building and testing the development container failed. Please investigate and fix manually..."
