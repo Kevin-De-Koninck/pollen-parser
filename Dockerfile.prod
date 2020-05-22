@@ -1,5 +1,5 @@
 # The builder image contains all required development tools
-FROM {BUILDER} AS builder
+FROM debian:buster-slim AS builder
 COPY requirements.txt /requirements.txt
 RUN apt-get update && apt-get install -y --no-install-recommends --yes python3-venv gcc libpython3-dev && \
     python3 -m venv /venv && \
