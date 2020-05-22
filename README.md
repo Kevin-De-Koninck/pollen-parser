@@ -108,10 +108,21 @@ We don't want to save the login token as plain text in our repository. For this,
     - Value: __<Paste the Dsonar.login token here>__
 5. Click on 'Add secret'.
 
-## Setup CodeClimate
+## (optional) Setup CodeClimate
 
-Make sure you have an account on CodeClimate. If not, log in with your GitHub account on 'CodeClimate Quality': https://codeclimate.com/login/github/join 
+This is optional, since SonarCloud does the same things and more. To remove CodeClimate from the project, remove the following code from the `.github/workflows/build-test.yml` [file](https://github.com/Kevin-De-Koninck/python-project-template/blob/master/.github/workflows/build-test.yml#L66-L72):
 
+``` yaml
+    - name: Send report to CodeClimate
+      run: |
+        export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter format-coverage -t coverage.py coverage.xml
+        ./cc-test-reporter upload-coverage -r "${{ secrets.CC_TEST_REPORTER_ID }}"
+```
+
+If you do want to keep using CodeClimate, Make sure you have an account on CodeClimate. If not, log in with your GitHub account on 'CodeClimate Quality': https://codeclimate.com/login/github/join 
 
 1. Open your dashboard: https://codeclimate.com/oss/dashboard
 2. Click on 'Add repository'.
