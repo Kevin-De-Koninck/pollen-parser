@@ -2,6 +2,7 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 from logzero import logger
+from datetime import date
 from .pushover import Pushover
 
 
@@ -51,9 +52,16 @@ class Pollenparser:
                 continue
             item[self.column1_header] = row.findAll("td")[0].string
             item[self.column2_header] = row.findAll("td")[1].string
+            # Add a * behind the current date row
+            if item[self.column1_header].startswith(self.get_current_day()):
+                item[self.column2_header] = item[self.column2_header] + " (today)"
             results.append(item)
         logger.debug("The following results were retrieved:\n%s", repr(results))
         return results
+
+    @staticmethod
+    def get_current_day():
+        return date.today().strftime("%d")
 
     def send_push_notification(self, results):
         message = ""
