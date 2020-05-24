@@ -14,7 +14,7 @@ def test_app(capsys, example_fixture):
     assert "Hello World" in captured.out
 
 
-def test_inc(example_fixture):
+def test_inc():
     # pylint: disable=W0612,W0613
     LOGGER.info("Initializing Template class and running the method 'inc'")
     b = Template()
