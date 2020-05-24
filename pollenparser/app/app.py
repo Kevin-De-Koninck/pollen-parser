@@ -49,14 +49,9 @@ class Pollenparser:
                 self.column1_header = row.findAll("th")[0].string
                 self.column2_header = row.findAll("th")[1].string
                 continue
-            if row.findAll("td"):
-                column_nr = 0
-                for cell in row.findAll("td"):
-                    column_nr = column_nr + 1
-                    if column_nr == 1:
-                        item[self.column1_header] = cell.string
-                    if column_nr == 2:
-                        item[self.column2_header] = cell.string
+            else:
+                item[self.column1_header] = row.findAll("td")[0].string
+                item[self.column2_header] = row.findAll("td")[1].string
             results.append(item)
         logger.debug("The following results were retrieved:\n%s", repr(results))
         return results
