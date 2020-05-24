@@ -1,8 +1,8 @@
 import sys
+from datetime import date
 import requests
 from bs4 import BeautifulSoup
 from logzero import logger
-from datetime import date
 from .pushover import Pushover
 
 
