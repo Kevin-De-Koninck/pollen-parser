@@ -69,9 +69,11 @@ get_value_from_section_in_config_file () {
 }
 
 docker_login () {
-  print_info "Logging in into GitHub Docker Registry."
   TOKEN="$(get_value_from_section_in_config_file "META" "GITHUB_TOKEN_FILE")"
   OWNER="$(get_value_from_section_in_config_file "META" "REPO_OWNER")"
+
+  print_info "Logging in into GitHub Docker Registry by running the following command:"
+  print_info "    cat "${TOKEN}" | docker login docker.pkg.github.com -u "${OWNER}" --password-stdin"
 
   if ! cat "${TOKEN}" | docker login docker.pkg.github.com -u "${OWNER}" --password-stdin > /dev/null 2>&1; then
     print_error "Unable to log in into docker.pkg.github.com using the following command: cat "${TOKEN}" | docker login docker.pkg.github.com -u "${OWNER}" --password-stdin"

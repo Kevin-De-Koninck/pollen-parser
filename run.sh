@@ -25,7 +25,7 @@ Arguments:
     --dryrun                      Do not actually perform the actions, just print the commands out
     -b|---bash                    Run an interactive shell inside the container
     -c|--command COMMAND          The command to be executed (will be ignore if -b is set)
-    -l|--login                    Log in into the Remote Docker registry
+    -l|--login                    Log in into the Remote Docker registry only and exit
     -h|--help                     Show this message
 
 EOF
@@ -106,7 +106,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     -l|--login)
       docker_login
-      shift
+      exit 0
       ;;
     -h|--help)
       help
