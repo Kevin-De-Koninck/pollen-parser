@@ -63,14 +63,6 @@ jobs:
     - name: Generate a coverage.py file on the local machine by running pytest again
       run: pytest
 
-    - name: Send report to CodeClimate
-      run: |
-        export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
-        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        chmod +x ./cc-test-reporter
-        ./cc-test-reporter format-coverage -t coverage.py coverage.xml
-        ./cc-test-reporter upload-coverage -r "${{ secrets.CC_TEST_REPORTER_ID }}"
-        
     - name: Rename the source in the converage file since sonarcloud runs inside a Docker container
       run: sed -i "s|$(pwd)|/github/workspace|g" coverage.xml
 
