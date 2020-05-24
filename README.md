@@ -1,8 +1,14 @@
 ![Build and tests](https://github.com/Kevin-De-Koninck/python-project-template/workflows/Build%20and%20tests/badge.svg)
 ![Push Docker container](https://github.com/Kevin-De-Koninck/python-project-template/workflows/Push%20Docker%20container/badge.svg)
+
 [![Maintainability](https://api.codeclimate.com/v1/badges/33686856d8577095210f/maintainability)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-template/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/33686856d8577095210f/test_coverage)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-template/test_coverage)
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-template&metric=alert_status)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-template)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-template&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-template)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-template&metric=coverage)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-template)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-template&metric=security_rating)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-template)
+
 
 # python-project-template
 
