@@ -17,7 +17,7 @@ RUN touch /app/coverage.xml
 RUN echo "\033[0;34m\n*** RUNNING PYTEST NOW...\033[0m\n"
 RUN /venv/bin/pytest
 RUN echo "\033[0;34m\n*** RUNNING PYLINT NOW...\033[0m\n"
-RUN /venv/bin/pylint --rcfile=setup.cfg /app/template/
+RUN /venv/bin/pylint --rcfile=setup.cfg /app/pollenparser/
 RUN echo "\033[0;34m\n*** RUNNING FLAKE8 NOW...\033[0m\n"
 RUN /venv/bin/flake8
 RUN echo "\033[0;34m\n*** RUNNING BANDIT NOW...\033[0m\n"
@@ -27,11 +27,11 @@ RUN /venv/bin/bandit -r --ini setup.cfg
 # From our base image, copy the artifacts from previous stages (virtual env and app)
 FROM gcr.io/distroless/python3-debian10 AS runner
 COPY --from=builder /venv /venv
-COPY --from=tester /app/template /app/template
+COPY --from=tester /app/pollenparser /app/pollenparser
 #ENVIRONMENT_VARS
 #EXPOSED_PORTS
 WORKDIR /app
-ENTRYPOINT ["/venv/bin/python3", "-m", "template"]
+ENTRYPOINT ["/venv/bin/python3", "-m", "pollenparser"]
 # Best practice: never run as root
 USER 1001
 LABEL name={NAME}
