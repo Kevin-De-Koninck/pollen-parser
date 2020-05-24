@@ -1,23 +1,20 @@
 import logging
-from .context import Template
 
 
 LOGGER = logging.getLogger(__name__)
 
 
-def test_app(capsys, example_fixture):
+def test_app(capsys, template_object):
     # pylint: disable=W0612,W0613
-    LOGGER.info("Initializing Template class and running the method 'hello_world'")
-    Template().hello_world()
+    LOGGER.info("Running the method 'hello_world' and checking the output on stdout.")
+    template_object.hello_world()
     captured = capsys.readouterr()
-    print("Captured output = {}".format(captured.out))
     assert "Hello World" in captured.out
 
 
-def test_inc():
+def test_inc(template_object):
     # pylint: disable=W0612,W0613
     LOGGER.info("Initializing Template class and running the method 'inc'")
-    b = Template()
-    b.inc()
-    assert b.value == 2
+    template_object.inc()
+    assert template_object.value == 2
 

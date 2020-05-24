@@ -1,8 +1,12 @@
 #!/bin/bash
 set -eu
 
+# Load all common functions
 source ./common_functions.sh
 
+# ---------------------------------------------------------------------------------------------
+# Old and new variables
+# ---------------------------------------------------------------------------------------------
 # Original names
 OLD_MODULE_NAME_LOWER_CASE='template'
 OLD_MODULE_NAME_CAPITALIZED='Template'
@@ -16,19 +20,18 @@ REPO_NAME="$(basename $(git rev-parse --show-toplevel))"
 REPO_OWNER="$(get_value_from_section_in_config_file "META" "REPO_OWNER")"
 GITHUB_TOKEN_FILE="$(get_value_from_section_in_config_file "META" "GITHUB_TOKEN_FILE")"
 
+# ---------------------------------------------------------------------------------------------
 # The main functionality
+# ---------------------------------------------------------------------------------------------
 
 print_info "Renaming variables and files..."
-
 MODULE_LOWERCASE="$(echo "${MODULE_NAME}" | awk '{print tolower($0)}')"
 MODULE_CAPITALIZED="$(tr '[:lower:]' '[:upper:]' <<< ${MODULE_LOWERCASE:0:1})${MODULE_LOWERCASE:1}"
-
 git grep -l "${OLD_MODULE_NAME_LOWER_CASE}" | xargs sed -i '' -e "s/${OLD_MODULE_NAME_LOWER_CASE}/${MODULE_LOWERCASE}/g"
 git grep -l "${OLD_MODULE_NAME_CAPITALIZED}" | xargs sed -i '' -e "s/${OLD_MODULE_NAME_CAPITALIZED}/${MODULE_CAPITALIZED}/g"
 git grep -l "${OLD_REPO_NAME}" | xargs sed -i '' -e "s/${OLD_REPO_NAME}/${REPO_NAME}/g"
 git grep -l "${OLD_REPO_OWNER}" | xargs sed -i '' -e "s/${OLD_REPO_OWNER}/${REPO_OWNER}/g"
 git grep -l "${OLD_GITHUB_TOKEN_FILE}" | xargs sed -i '' -e "s|${OLD_GITHUB_TOKEN_FILE}|${GITHUB_TOKEN_FILE}|g"
-
 git mv "${OLD_MODULE_NAME_LOWER_CASE}" "${MODULE_LOWERCASE}"
 
 print_info "Removing the badges from the README.md file"
@@ -43,11 +46,8 @@ print_info "Adding all changes to a new commit..."
 git add -u 
 git commit -m "Initialize project"
 
-print_info "Setting a new tag in the repository..."
-git tag -a v0.0.0 -m "First draft for Github action 'push'"
-
 print_info "All changes are inside the local commit 'Initialize project'. Use 'git push' to push these changes. This will trigger the github action."
-print_info "Tag v0.0.0 has been set. Use 'git push origin --tags' to push the tag. This will trigger a github action that builds and pushes the production container image to the remote Docker registry."
-print_info "You can now safely remove this script. Have fun!"
+print_info "You can now safely remove this script by running 'rm -f '${0}'."
+print_info "Have fun!"
 exit 0
 

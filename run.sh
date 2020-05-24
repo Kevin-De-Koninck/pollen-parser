@@ -17,7 +17,7 @@ DOCKER_RUN_BASE="docker run --rm -it"
 
 help () {
   cat << EOF
-./run.sh [-v VERSION] [-d] [--dryrun] [-b] [-c COMMAND] [-l] [-h]
+./run.sh [-v VERSION] [-d] [--dryrun] [-b] [-c COMMAND] [-l]
 
 Arguments:
     -v|--version VERSION          Overwrite the version of the to run container
@@ -35,8 +35,14 @@ EOF
 # FUNCTIONS
 ####################################################################################
 
+# Create a command line interface argument for a certain section.
+# This will convert the data in the config.ini file into the correct port and volume mapping string
+# used on the command line interface.
+# Arguments:
+#   - SECTION: Name of the section to be parsed (VOLUME_MAPS, PORT_MAPS)
+#   - ARGS_PREFIX: CLI argument prefix in front of the maps (-v, -p)
 create_cli_arg () {
-  local WHAT="${1}"
+  local SECTION="${1}"
   local ARGS_PREFIX="${2}"
 
   local ARGS=""
@@ -44,22 +50,27 @@ create_cli_arg () {
     if [[ "${LINE}" != "" ]]; then
       ARGS="${ARGS} ${ARGS_PREFIX} '${LINE}'"
     fi  
-  done < <(parse_section_of_config_ini "${WHAT}")
+  done < <(parse_section_of_config_ini "${SECTION}")
 
   echo "$(echo ${ARGS} | tr '=' ':')"
 }
 
+# Determine if the required docker container exists locally.
+# If it does not exist locally, try to pull it from the remote.
+# Else, fail the script.
 check_if_container_exists () {
   if [[ "$(docker images -q ${IMAGE}:${TAG} 2> /dev/null)" == "" ]]; then
     print_info "Image '${IMAGE}:${TAG}' does not exist locally, trying to pull it from the remote repo..."
     if ! docker pull ${IMAGE}:${TAG} 2> /dev/null; then
       print_error "Image ${IMAGE}:${TAG} does not exist locally and could not be pulled from the remote repository. Please build this image first." 
     else
-      print_info "Unable to download the image '${IMAGE}:${TAG}' from the remote repository. Please build this image first." 
+      print_info "Unable to download the image '${IMAGE}:${TAG}' from the remote repository. Please build this image first by running:" 
+      print_info "    ./build.sh -p <dev/prod> -v ${TAG}"
     fi
   fi
 }
 
+# Run the Docker container.
 run_container () {
   print_info "Running the container as follows:"
   print_info "  ${DOCKER_RUN_BASE} ${IMAGE}:${TAG} ${COMMAND}"

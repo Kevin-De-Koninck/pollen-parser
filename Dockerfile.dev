@@ -1,10 +1,11 @@
 # The base image is only used for build-dev (see last step)
+# Here we install all development tools that might be handy during debug
 FROM python:3.8.1-buster AS base
 RUN apt-get update && \
     apt-get install -y --no-install-recommends vim netcat && \
     rm -rf /var/lib/apt/lists/*
 
-# The builder image contains all required development tools
+# The builder image contains all required python modules
 FROM python:3.8.1-buster AS builder
 COPY requirements.txt /requirements.txt
 RUN apt-get update && apt-get install -y --no-install-recommends --yes python3-venv gcc libpython3-dev && \
@@ -13,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends --yes python3-v
     /venv/bin/pip install -r /requirements.txt && \
     /venv/bin/pip install ipdb  # Extra development tools not available in prod image
 
-# Copy the entire repository and run all pytests in the tester image
+# Copy the entire repository and run all tests in the tester image
 FROM builder AS tester
 COPY . /app
 WORKDIR /app

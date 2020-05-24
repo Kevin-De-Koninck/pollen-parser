@@ -53,7 +53,7 @@ jobs:
       with:
         python-version: '3.8'
 
-    # Runs a single command using the runners shell
+    # Runs a command using the runners shell
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip

@@ -20,7 +20,7 @@ PROJECT="UNDEFINED"
 
 help () {
   cat << EOF
-./build.sh -p PROJECT <OPTIONAL_ARGUMENTS>
+./build.sh -p PROJECT [-v VERSION] [-u] [-s] [-c]
 
 Required arguments:
     -p|--project PROJECT           The project to be build (dev/prod)
@@ -38,6 +38,14 @@ EOF
 ####################################################################################
 # FUNCTIONS
 ####################################################################################
+
+# Parse the config.ini file and prepare the Dockerfile statement.
+# Arguments:
+#   - WHAT: The ini file section (ENVIRONMENT_VARS, PORT_MAPS)
+#   - CMD_PREFIX: The prefix for the generated list (ENV, EXPOSE)
+# Sample output:
+#   - ENV A=1 B=2
+#   - EXPOSE 1000 1001
 create_dockerfile_command () {
   local WHAT="${1}"
   local CMD_PREFIX="${2}"
@@ -58,9 +66,13 @@ create_dockerfile_command () {
   echo "${CMD}"
 }
 
+# Build function that builds (and if required) runs all tests for a certain project.
+# Arguments:
+#   - BUILD_PROJECT: Project to be build (dev/prod)
 build (){
   local BUILD_PROJECT="${1}"
 
+  # Prepare the dynamic Dockerfile commands based on the config.ini file
   local ENV_CMD="$(create_dockerfile_command "ENVIRONMENT_VARS" "ENV")"
   local EXPOSE_CMD="$(create_dockerfile_command "PORT_MAPS" "EXPOSE")"
 
@@ -84,6 +96,7 @@ build (){
         Dockerfile.${BUILD_PROJECT} | docker build -t ${IMAGE}:${VERSION} -f- .
   fi
 
+  # Push the image to the registry if required.
   if [[ "${PUSH_TO_REGISTRY}" == "True" ]]; then
     echo
     print_info "Pushing image to GitHub Docker Registry..."
@@ -151,6 +164,7 @@ case "${PROJECT}" in
     VERSION="${TAG}"
     build "dev"
     ;;
+  # Default value, case item will activate when cleaning only
   UNDEFINED)
     ;;
   *)
@@ -158,9 +172,11 @@ case "${PROJECT}" in
     exit 1
 esac
 
+# Clean the local Docker registry if required
 if [[ "${CLEAN}" == "True" ]]; then
   echo
-  print_info "Cleaning the local Docker registry..."
+  print_info "Cleaning the local Docker registry by running the following command:"
+  print_info "  docker system prune -f --filter "label=name=${MODULE}""
   docker system prune -f --filter "label=name=${MODULE}"
 fi
 
